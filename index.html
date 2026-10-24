@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحميل تطبيق مسار | Messar App</title>
+<meta name="description" content="حمّل تطبيق مسار – مسارك نحو التفوق">
+<meta property="og:title" content="تطبيق مسار | Messar App">
+<meta property="og:description" content="مسارك نحو التفوق – حمّل التطبيق الآن">
+<meta property="og:image" content="messar.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-dark:#04281c;
+    --green:#0b5c3e;
+    --accent:#2fe0a0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Tajawal',system-ui,sans-serif;
+    min-height:100vh;
+    background:radial-gradient(circle at 70% 20%,#0d7a52 0%,var(--green) 35%,var(--green-dark) 100%);
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    padding:24px 16px;
+  }
+  .card{width:100%;max-width:720px;text-align:center}
+  .banner{
+    width:100%;height:auto;display:block;
+    border-radius:20px;
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+    border:1px solid rgba(47,224,160,.25);
+  }
+  h1{font-size:1.6rem;font-weight:800;margin:28px 0 8px}
+  p{opacity:.85;font-size:1.05rem;margin-bottom:24px}
+  .stores{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .store{
+    display:flex;align-items:center;gap:12px;
+    background:#000;color:#fff;text-decoration:none;
+    padding:10px 22px;border-radius:14px;
+    border:1px solid rgba(255,255,255,.35);
+    min-width:200px;direction:ltr;
+    transition:transform .15s,border-color .15s;
+  }
+  .store:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .store svg{width:28px;height:28px;flex-shrink:0}
+  .store span{display:flex;flex-direction:column;text-align:left;line-height:1.15}
+  .store small{font-size:.7rem;opacity:.8}
+  .store b{font-size:1.15rem;font-weight:700;font-family:system-ui,sans-serif}
+  .loader{margin-top:22px;font-size:.9rem;opacity:.7;display:none}
+  .loader.on{display:block}
+</style>
+</head>
+<body>
+<main class="card">
+  <img class="banner" src="messar.jpg" alt="تطبيق مسار – مسارك نحو التفوق">
+
+  <h1>حمّل تطبيق مسار</h1>
+  <p id="msg">اختر متجرك لتحميل التطبيق:</p>
+
+  <div class="stores">
+    <a class="store" id="appstore" href="#">
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.77-3.32-1.8-1.41-.14-2.76.83-3.47.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.76 2.27-1.6 2.78-.41 6.9 1.15 9.15.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.38 0 1.77.74 2.98.72 1.23-.02 2.01-1.12 2.76-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.4-.92-2.42-3.67zM14.1 5.86c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.67 1.37-.58.67-1.1 1.76-.96 2.8 1.01.08 2.05-.52 2.69-1.28z"/></svg>
+      <span><small>Download on the</small><b>App Store</b></span>
+    </a>
+    <a class="store" id="playstore" href="#">
+      <svg viewBox="0 0 24 24"><path fill="#34a853" d="M3.6 1.8 13.8 12 3.6 22.2c-.4-.2-.6-.7-.6-1.2V3c0-.5.2-1 .6-1.2z"/><path fill="#fbbc04" d="m17.2 8.6-3.4 3.4 3.4 3.4 3.9-2.2c1.1-.6 1.1-1.8 0-2.4z"/><path fill="#ea4335" d="M13.8 12 3.6 22.2c.4.2.9.2 1.4-.1l12.2-6.7z"/><path fill="#4285f4" d="M13.8 12 17.2 8.6 5 1.9c-.5-.3-1-.3-1.4-.1z"/></svg>
+      <span><small>GET IT ON</small><b>Google Play</b></span>
+    </a>
+  </div>
+
+  <div class="loader" id="loader">جاري تحويلك إلى المتجر...</div>
+</main>
+
+<script>
+  const APP_STORE  = "https://apps.apple.com/fr/app/massar/id6814931290";
+  const PLAY_STORE = "https://play.google.com/store/apps/details?id=com.moustaphaissa.Midad";
+
+  document.getElementById("appstore").href  = APP_STORE;
+  document.getElementById("playstore").href = PLAY_STORE;
+
+  // Redirection automatique selon le téléphone (comme la page de référence)
+  const ua = navigator.userAgent || "";
+  const isIOS = /iPhone|iPad|iPod/i.test(ua) ||
+                (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isAndroid = /Android/i.test(ua);
+  const target = isIOS ? APP_STORE : isAndroid ? PLAY_STORE : null;
+
+  if (target) {
+    document.getElementById("loader").classList.add("on");
+    document.getElementById("msg").textContent = "إذا لم يتم تحويلك تلقائيًا، اختر متجرك:";
+    setTimeout(() => { window.location.href = target; }, 1500);
+  }
+</script>
+</body>
+</html>
